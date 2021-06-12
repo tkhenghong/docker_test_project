@@ -22,6 +22,9 @@ app.get('/profile-picture', function (req, res) {
 
 // use when starting application locally
 
+// Problem: The value was mongodb://admin:password@localhost:27017, works fine when running directly in IDE.
+// But when after containerized, Node.JS failed to reach MongoDB.
+// After experimenting, you need to set replace localhost to mongodb (container name set in the mongo.yaml file)
 let mongoUrlLocal = "mongodb://admin:password@mongodb:27017";
 
 // use when starting application as docker container
