@@ -2,7 +2,7 @@ version: "3"                # Version of the Docker Compose.
 
 services:                   # This is the place where your Docker Images comes in (with startup details such as network bindings, environment etc).
   my-app:                   # Pulling it from Amazon ECR private Docker Repository
-    image: 406252624329.dkr.ecr.us-east-2.amazonaws.com/my-app:1.2
+    image: 406252624329.dkr.ecr.us-east-2.amazonaws.com/my-app:1.3
     ports:
       - 3000:3000
   mongodb:                  # container name. This maps to "--name" in "docker run" command.

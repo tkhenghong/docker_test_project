@@ -22,11 +22,9 @@ app.get('/profile-picture', function (req, res) {
 
 // use when starting application locally
 
-// Problem: The value was mongodb://admin:password@localhost:27017, works fine when running directly in IDE.
-// But when after containerized, Node.JS failed to reach MongoDB.
-// After experimenting, you need to set replace localhost to mongodb (container name set in the mongo.yaml file)
-let mongoUrlLocal = "mongodb://admin:password@mongodb:27017";
+// let mongoUrlLocal = "mongodb://admin:password@localhost:27017";
 
+// You MUST use mongodb instead of localhost when you containerize this app into Docker, due to localhost means inside the isolated Docker Container environment.
 // use when starting application as docker container
 let mongoUrlDocker = "mongodb://admin:password@mongodb";
 
@@ -39,7 +37,7 @@ let databaseName = "my-db";
 app.post('/update-profile', function (req, res) {
     let userObj = req.body;
 
-    MongoClient.connect(mongoUrlLocal, mongoClientOptions, function (err, client) {
+    MongoClient.connect(mongoUrlDocker, mongoClientOptions, function (err, client) {
         if (err) throw err;
 
         let db = client.db(databaseName);
@@ -61,7 +59,7 @@ app.post('/update-profile', function (req, res) {
 app.get('/get-profile', function (req, res) {
     let response = {};
     // Connect to the db
-    MongoClient.connect(mongoUrlLocal, mongoClientOptions, function (err, client) {
+    MongoClient.connect(mongoUrlDocker, mongoClientOptions, function (err, client) {
         if (err) throw err;
 
         let db = client.db(databaseName);
