@@ -1,6 +1,10 @@
 version: "3"                # Version of the Docker Compose.
 
 services:                   # This is the place where your Docker Images comes in (with startup details such as network bindings, environment etc).
+  my-app:                   # Pulling it from Amazon ECR private Docker Repository
+    image: 406252624329.dkr.ecr.us-east-2.amazonaws.com/my-app:1.2
+    ports:
+      - 3000:3000
   mongodb:                  # container name. This maps to "--name" in "docker run" command.
     image: mongo            # Docker image name. Of course you can specify the version of the image optionally.
     ports:                  # This maps to "-p HOST_ENVIRONMENT_PORT:CONTAINER_INTERNAL_PORT" in "docker run" command.
@@ -11,7 +15,7 @@ services:                   # This is the place where your Docker Images comes i
   mongo-express:
     image: mongo-express
     ports:
-      - 8080:8081
+      - 8081:8081 # I got Jenkins running on port 8080, so using back 8081
     environment:
       - ME_CONFIG_MONGODB_ADMINUSERNAME=admin
       - ME_CONFIG_MONGODB_ADMINPASSWORD=password
