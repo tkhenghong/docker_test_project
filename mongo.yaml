@@ -12,11 +12,16 @@ services:                   # This is the place where your Docker Images comes i
     environment:            # This maps to "-e VARIABLE_NAME=VALUE" in "docker run" command.
       - MONGO_INITDB_ROOT_USERNAME=admin
       - MONGO_INITDB_ROOT_PASSWORD=password
+    volumes:
+    - mongo-data:/data/db          # Go Google search "default path of data stored by MongoDB"
   mongo-express:
     image: mongo-express
     ports:
-      - 8081:8081 # I got Jenkins running on port 8080, so using back 8081
+      - 8081:8081           # I got Jenkins running on port 8080, so using back 8081
     environment:
       - ME_CONFIG_MONGODB_ADMINUSERNAME=admin
       - ME_CONFIG_MONGODB_ADMINPASSWORD=password
       - ME_CONFIG_MONGODB_SERVER=mongodb
+volumes:
+  mongo-data:
+    driver: local           # You need this to tell Docker to build real directory in the host machine.
